@@ -1,0 +1,20 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=3067
+
+*ref* is a Vim plugin to view the reference.  This plugin can be separated to
+core of viewer and sources of reference.  As a result, various references can
+be viewed by the same interface.
+
+Following sources are included in this plugin:
+- alc (Online English-Japanese/Japanese-English dictionary)
+- man
+- perldoc
+- phpmanual
+- pydoc
+- refe
+
+Reference viewer is mere a buffer to view the reference.  This is opened by :Ref
+command or K like :help.  If the reference viewer is already opened in current
+tab page, it is used again.
+
+Latest Version:
+http://github.com/thinca/vim-ref
