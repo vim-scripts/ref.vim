@@ -1,5 +1,5 @@
 " Integrated reference viewer.
-" Version: 0.3.0
+" Version: 0.3.1
 " Author : thinca <thinca+vim@gmail.com>
 " License: Creative Commons Attribution 2.1 Japan License
 "          <http://creativecommons.org/licenses/by/2.1/jp/deed.en>
@@ -65,7 +65,8 @@ endfunction
 function! ref#complete(lead, cmd, pos)  " {{{2
   let list = matchlist(a:cmd, '^\v.{-}R%[ef]\s+(\w+)\s+(.*)$')
   if list == []
-    return filter(ref#available_source_names(), 'v:val =~ "^".a:lead')
+    let s = keys(filter(copy(ref#available_sources()), 'v:val.available()'))
+    return filter(s, 'v:val =~ "^".a:lead')
   endif
   let [source, query] = list[1 : 2]
   return get(s:sources, source, s:prototype).complete(query)
@@ -229,9 +230,24 @@ endfunction
 
 function! ref#detect()
   if exists('b:ref_source')
-    return b:ref_source
+    let Source = b:ref_source
   elseif exists('g:ref_detect_filetype[&l:filetype]')
-    return g:ref_detect_filetype[&l:filetype]
+    let Source = g:ref_detect_filetype[&l:filetype]
+  elseif exists('g:ref_detect_filetype._')
+    let Source = g:ref_detect_filetype._
+  else
+    let Source = ''
+  endif
+
+  if type(Source) == s:TYPES.function
+    " For dictionary function.
+    let s = call(Source, [&l:filetype], g:ref_detect_filetype)
+    unlet Source
+    let Source = s
+  endif
+
+  if type(Source) == s:TYPES.string && Source != ''
+    return Source
   endif
   throw 'ref: Can not detect the source.'
 endfunction

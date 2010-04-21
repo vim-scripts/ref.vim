@@ -1,6 +1,6 @@
 *ref.txt*	Integrated reference viewer.
 
-Version: 0.3.0
+Version: 0.3.1
 Author : thinca <thinca+vim@gmail.com>
 License: Creative Commons Attribution 2.1 Japan License
          <http://creativecommons.org/licenses/by/2.1/jp/deed.en>
@@ -203,9 +203,8 @@ g:ref_open					*g:ref_open*
 	|:vsplit|, |:tabnew|, and so on.  The default value is "split".
 
 g:ref_cache_dir					*g:ref_cache_dir*
-	The directory for caching complete list.  Some sources uses this via
-	|ref#cache()|.  The default value is "~/.vim_ref_cache".  ~ means home
-	directory.
+	The directory for caching.  Some sources uses this via |ref#cache()|.
+	The default value is "~/.vim_ref_cache".  ~ means home directory.
 
 g:ref_use_vimproc				*g:ref_use_vimproc*
 	When true, |ref#system()| use |vimproc|.  When |vimproc#system()|
@@ -213,7 +212,11 @@ g:ref_use_vimproc				*g:ref_use_vimproc*
 
 g:ref_detect_filetype				*g:ref_detect_filetype*
 	Specifies the |Dictionary| to detect the using source from |filetype|.
-	Some sources register the appropriate entry on loaded.
+	The key is a filetype, and the value is a source name or a |Funcref|.
+	If the value is |Funcref|, it take a filetype as argument and return
+	the source name.  If it can not detect, return empty string.  If _ key
+	exists, it is used when it is not possible to detect.  Some sources
+	register the appropriate entry on loaded.
 
 
 
@@ -281,6 +284,10 @@ TODO						*ref-todo*
 
 ==============================================================================
 CHANGELOG					*ref-changelog*
+
+0.3.1	2010-04-22
+	- |g:ref_detect_filetype| accepts a special key _.
+	- |g:ref_detect_filetype| accepts |Funcref|.
 
 0.3.0	2010-04-18
 	- Changed the specification of |ref-sources|.
