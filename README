@@ -6,6 +6,9 @@ be viewed by the same interface.
 
 Following sources are included in this plugin:
 - alc (Online English-Japanese/Japanese-English dictionary)
+- clojure
+- erlang
+- hoogle
 - man
 - perldoc
 - phpmanual
@@ -16,5 +19,7 @@ Reference viewer is mere a buffer to view the reference.  This is opened by :Ref
 command or K like :help.  If the reference viewer is already opened in current
 tab page, it is used again.
 
+This also includes unite-ref for unite.vim(vimscript #3396).
+
 Latest Version:
-http://github.com/thinca/vim-ref
+https://github.com/thinca/vim-ref
